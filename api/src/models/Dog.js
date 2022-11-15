@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const { getDogs } = require('../controllers/dog.controllers');
 // Exportamos una funcion que define el modelo
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
@@ -29,7 +30,7 @@ module.exports = (sequelize) => {
     },
     image: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     },
     createInDb: {
       type: DataTypes.BOOLEAN,
