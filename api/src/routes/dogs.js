@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {getDogs, createDog, getDogsId} = require("../controllers/dog.controllers.js");
+const {getDogs, createDog, getDogsId, getDogsName} = require("../controllers/dog.controllers.js");
 
 
 const router = Router();
@@ -7,7 +7,16 @@ const router = Router();
 router.get("/", async (req, res)=>{
     const {name} = req.query;
     if(name){
-
+      try{
+        const dog = await getDogsName(name);
+        if(dog){
+         res.status(200).json(dog);   
+        }else{
+          res.status(404).send("Not found");
+        }
+      }catch(error){
+         res.status(500).json({error: error.message});
+      }
     }else{
      try{
         const dogs = await getDogs();

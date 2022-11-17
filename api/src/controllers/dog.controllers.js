@@ -8,18 +8,33 @@ const {
 
 const getDogs = async () =>{
     try{
-        const apiInfo = await axios.get(`https://api.thedogapi.com/v1/breeds?limit=10&api_key={${API_KEY}}`)
+        const apiInfo = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key={${API_KEY}}`)
         let dogsApi = [];
+
         apiInfo.data.map((el)=> {
-             dogsApi.push({
-                id: el.id,
-                name: el.name,
-                height: el.height.metric,
-                weight: el.weight.metric,
-                life_span: el.life_span,
-                image: el.image.url,
-                temperament: (el.temperament.split(",")).map(el=>el.trim())
-            });
+
+          if(el.temperament){
+
+            dogsApi.push({
+               id: el.id,
+               name: el.name.toLowerCase(),
+               height: el.height.metric,
+               weight: el.weight.metric,
+               life_span: el.life_span,
+               image: el.image.url,
+               temperament: (el.temperament.split(",")).map(el=>el.toLowerCase().trim())
+           });
+          }else{
+            dogsApi.push({
+              id: el.id,
+              name: el.name.toLowerCase(),
+              height: el.height.metric,
+              weight: el.weight.metric,
+              life_span: el.life_span,
+              image: el.image.url,
+              temperament: []
+          });
+          }
         });  
 
        const dbInfo = await Dog.findAll({include:{ model: Temperament}});
@@ -32,6 +47,7 @@ const getDogs = async () =>{
             weight: dbInfo[i].weight,
             life_span: dbInfo[i].life_span,
             image: dbInfo[i].image,
+            createInDb: dbInfo[i].createInDb,
             temperament: dbInfo[i].temperaments.map(el=>el.name)
           })
        }
@@ -46,7 +62,7 @@ const getDogs = async () =>{
 
 const createDog = async (name, height, weight, life_span, image, temperament)=>{
  try{
-   if(!(name)||!(height)||!(weight)||!(life_span)||!(image)){
+   if(!(name)||!(height)||!(weight)||!(image)){
       throw new Error("One of the arguments is not defined")
     }
     
@@ -72,59 +88,46 @@ const createDog = async (name, height, weight, life_span, image, temperament)=>{
     
     return newDog;
  }catch(error){
-  return error.message;
+   throw new Error(error.message);
  }
 };
 
 
 const getDogsId = async (id)=>{
-
-  const dogs = await getDogs();
-  const result = dogs.filter(el => el.id.toString() === id.toString());
-
-  // if( id.length > 10){
-  //   const dogDb = await Dog.findOne({
-  //     where: {
-  //       id: id
-  //     },
-  //     includes: Temperament
-  //   });
-  //   return dogDb;
-  // }else{
-  //   const dogApi = await axios.get(`https://api.thedogapi.com/v1/breeds/${id}?limit=10&api_key={${API_KEY}}`)
-  //   .then(res => res.data);
-  // }
-  
-  if(result == []){
-    throw new Error("Not found");
-  }else{
-    return result;
-  }
-   
-
+ try{
+   const dogs = await getDogs();
+   const result = dogs.find(el => el.id.toString() === id.toString());
+   if(!(result)){
+     throw new Error("Not found");
+   }else{
+     return result;
+   }
+ }catch(error){
+  throw new Error(error.message);
+ }
 }
 
-// const getDogsName = async(name)=>{
-
-//   let newName = name.toLowerCase();
-//   const dogDb = await Dog.findOne({
-//     where: {
-//       name: newName
-//     },
-//     include: Temperament
-//   });
-   
-//   if(dogDb){
-
-//   }
-
-
-// }
+const getDogsName = async(name)=>{
+  try{
+    const dogs = await getDogs();
+    const result = dogs.find(el=> el.name.toLowerCase() === name.toLowerCase());
+    const arr = [];
+    arr.push(result);
+    if(!(result)){
+      throw new Error("Not found");
+    }else{
+      return arr;
+    }
+  }catch(error){
+    throw new Error(error.message);
+  }
+}
 
 
 
 module.exports = {
     getDogs,
     createDog,
-    getDogsId
+    getDogsId,
+    getDogsName
 }
