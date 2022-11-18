@@ -1,4 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+.container-home{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+
 .container-card{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.container-card a{
+    text-decoration: none;
+}
+
+.container-home select{
+    padding: 3px;
+    background-color: white;
+    border: 1px solid rgba(157, 156, 156, 0.382);
+    color: black;
+    width: 350px;
+    font-family: 'Acme', sans-serif;
+}
+
+.filtros{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.container-btnCreate{
+    height: 300px;
+    background-color: black;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 50px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    background-image: url("../../assest/fondoCreate2.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container-btnCreate h1{
+    padding: 5px;
+    margin-left: 20px;
+    text-align: start;
+    color: white;
+    font-size: 50px;
+}
+
+.create-h1-dog{
+    color: rgb(183, 128, 61);
+}
+
+.btnCreate{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+}
+
+.btnCreate button{
+    margin-bottom: 20px;
+    margin-right: 20px;
+    width: 150px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background-color: rgb(156, 97, 24);
+    color: black;
+    font-size: 15px;
+    letter-spacing: 2px;
 }

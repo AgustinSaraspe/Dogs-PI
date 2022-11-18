@@ -13,7 +13,6 @@ const Pagination = ({dogsPage, allDogs, pagination})=>{
     return(
        <nav> 
           <ul className="pagination">
-
             {
             pageNumbers && pageNumbers.map((num) =>(
             <li key={num} className="number"><a onClick={()=> pagination(num)}>{num}</a></li>))

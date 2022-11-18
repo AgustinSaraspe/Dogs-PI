@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+.inputSearch{
+    height: 25px;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    border-bottom: 1px solid #7b7a79;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.lupa{
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}

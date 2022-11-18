@@ -83,21 +83,34 @@ const Home = () =>{
         <div>
             {
               currentDogs.length === 0 ? <Loading/> :
-              <div>
+              <div className="container-home">
                <NavBar/>
+               <div className="container-btnCreate">
+                <div className="create-info">
+                    <h1>Create</h1>
+                    <h1>your</h1>
+                    <h1><b className="create-h1-dog">dog</b></h1>
+                </div>
+                <div className="btnCreate">
+               <Link to="/create">
+                  <button>Lets go</button>
+               </Link>
+               </div>
+               </div>
+             <div className="container-info">
+                <div className="filtros">
                <SearchBar updateCurrentPage={updateCurrentPage}/>
-             <div>
 
                 <select defaultValue="title" onChange={(e) => filterTemperament(e)}>
                    <option value="title">Filter by temperament</option>
                    <option value="All">All</option>
                    {
-                    temperaments && temperaments.map((el)=>{
-                      return (
-                        <option value={el.name}>{el.name}</option>
-                      )
-                    })
-                   }
+                     temperaments && temperaments.map((el)=>{
+                       return (
+                         <option value={el.name}>{el.name}</option>
+                         )
+                        })
+                      }
                 </select>
 
 
@@ -107,7 +120,7 @@ const Home = () =>{
                     <option value="desc">Z to A</option>
                 </select>
                 <select onChange={e => filterWeight(e)}>
-                    <option value="title">Filter by weigth</option>
+                    <option value="title">Order by weigth</option>
                     <option value="Heavy">Heavy</option>
                     <option value="Lightweight">Lightweight</option>
                 </select>
@@ -117,9 +130,10 @@ const Home = () =>{
                     <option value="Existing">Existing</option>
                 </select>
                 
+                </div>
                 <div className="container-card">
                 {
-                  error ? <Error msg={error.error} /> :  currentDogs && currentDogs.map((el)=><Link to={`/home/${el.id}`}><DogCard key={el.id.toString()} name={el.name} image={el.image} weight={el.weight} temperament={Array.isArray(el.temperament) ? el.temperament.join(" ") : "" }/></Link>)
+                  error ? <Error msg={error.error} /> :  currentDogs && currentDogs.map((el)=><Link to={`/home/${el.id}`}><DogCard key={el.id.toString()} name={el.name} image={el.image} weight={el.weight} temperament={Array.isArray(el.temperament) ? el.temperament.join(", ") : "" }/></Link>)
                 }
                </div>
                 <Pagination dogsPage={dogsPage} allDogs={dogs.length} pagination={pagination}/>

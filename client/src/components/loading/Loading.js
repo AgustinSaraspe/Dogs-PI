@@ -1,9 +1,11 @@
 import React from "react";
+import Loader from "./loader/Loader";
+import "./Loading.css"
 
 const Loading = () =>{
     return(
-        <div>
-            <h1>Loading...</h1>
+        <div className="loading">
+            <Loader/>
         </div>
     )
 }

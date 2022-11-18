@@ -2,6 +2,8 @@ import React from "react";
 import {useState} from "react";
 import { useDispatch } from "react-redux";
 import { getDogName } from "../../redux/actions/index.js";
+import "./SearchBar.css";
+import lupa from  "../../assest/lupa.png"
 
 
 const SearchBar = ({updateCurrentPage}) =>{
@@ -20,9 +22,9 @@ const SearchBar = ({updateCurrentPage}) =>{
     }
 
     return(
-        <div>
-            <input type="text" placeholder="..." onChange={(e)=>handleChange(e)}/>
-            <button type="submit" onClick={(e)=>handleSubmit(e)}>Search</button>
+        <div className="search">
+            <input className="inputSearch" type="text" placeholder="..." onChange={(e)=>handleChange(e)}/>
+           <img onClick={(e)=>handleSubmit(e)} className="lupa" src={lupa}/>
         </div>
     )
 };

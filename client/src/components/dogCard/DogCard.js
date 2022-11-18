@@ -1,13 +1,15 @@
 import React from "react";
-
+import "./DogCard.css";
 
 const DogCard = ({name,temperament,image,weight}) =>{
     return(
-        <div>
+        <div className="dog-card">
             <img src={image} alt="imgage not found" width="200px" height="250px"/>
-            <h3>{name}</h3>
+            <div className="card-info">
+            <h3>{name.toUpperCase()}</h3>
             <h5>{temperament}</h5>
-            <h6>{weight}</h6>
+            <h6>{weight} KG</h6>
+            </div>
         </div>
     ) 
 }

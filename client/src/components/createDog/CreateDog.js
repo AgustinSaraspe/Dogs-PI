@@ -1,6 +1,8 @@
 import React, { useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postDog, getTemperaments } from "../../redux/actions/index.js";
+import "./CreateDog.css";
+import img from "../../assest/dog.png"
 
 
 export const validate = (input) => {
@@ -8,9 +10,9 @@ export const validate = (input) => {
 
     if(!input.name) error.name = "Name is required.";
 
-    if(input.heightMin <= 0) error.height = "Height is required."
+    if(input.heightMin <= 0) error.height = "Height min is required."
 
-    if(input.weightMin <= 0) error.weight = "Weight is required."
+    if(input.weightMin <= 0) error.weight = "Weight min is required."
 
     if(!input.image) error.image = "Image is required.";
 
@@ -53,6 +55,7 @@ const CreateDog = ()=>{
             temperament: [...input.temperament]
         } 
         dispatch(postDog(dogCreated));
+        alert("It was created successfully!")
         setInput({
             name: "",
             heightMin: 0,
@@ -96,7 +99,12 @@ const CreateDog = ()=>{
    }
 
     return(
-        <div>
+        <div className="container-create">
+            <div className="create-img">
+                <img src={img}/>
+            </div>
+            <div className="create-form">
+                <h1>Create your dog</h1>
             <form onSubmit={e => handleSubmit(e)}>
                 <label>Name:</label><input name="name" type="text" value={input.name} placeholder="..." onChange={e => handleChange(e)} onBlur={e => handleBlur(e)}/>
                 {error.name && (<p className="danger">{error.name}</p>)}
@@ -133,8 +141,9 @@ const CreateDog = ()=>{
                               </div>)
                     })
                 }
-              <input type="submit" value="Create Dog" disabled={Object.keys(error).length === 0 ? false : true}/>  
+              <button  disabled={Object.keys(error).length === 0 ? false : true}>Create Dog</button>  
             </form>
+            </div>
         </div>
     )
 }
